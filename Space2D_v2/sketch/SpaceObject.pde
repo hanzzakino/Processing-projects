@@ -5,8 +5,8 @@ class SpaceObject{
   float mass;
   float rad;
   
-  float att_direction;
-  float att_dist;
+  //float att_direction;
+  //float att_dist;
   
   final float G = 6.6743*(pow(10,-16));
   
@@ -36,33 +36,44 @@ class SpaceObject{
   
   void applyForce(SpaceObject other){
     float dist = loc.dist(other.loc);
-    att_dist=dist;
+    //att_dist=dist;
     float dy = other.loc.y-loc.y;
     float dx = other.loc.x-loc.x;
     float angle = atan2(dx,dy);  
-    att_direction=angle;
+    //att_direction=angle;
     float F = (G*mass*other.mass)/(dist*dist); 
     float a=_scale(F/mass);
     acc.mult(0);
     acc.add(new PVector(a*sin(angle),a*cos(angle)));
+  }
+  void applyForce(ArrayList<SpaceObject> objects, int thisIndx){
+    float a = 0, dist, dy, dx, angle, F;
+    acc.mult(0);
+    for(int i = 0; i < objects.size(); i++){
+      if(i == thisIndx) continue;
+      dist = loc.dist(objects.get(i).loc);
+      dy = objects.get(i).loc.y-loc.y;
+      dx = objects.get(i).loc.x-loc.x;
+      angle = atan2(dx,dy); 
+      F = (G*mass*objects.get(i).mass)/(dist*dist);
+      a = _scale(F/mass);
+      acc.add(new PVector(a*sin(angle),a*cos(angle)));
+    }
   }
   
   void show(){
     fill(255);
     stroke(255);
     strokeWeight(1);
-    
-    
-    
     ellipse(loc.x,loc.y,rad*2,rad*2);
-    
-    line(loc.x, loc.y, loc.x+(55*sin(att_direction)), loc.y+(55*cos(att_direction)));
-    
-    
-    textSize(25);
-    text(OrigVal(vel.mag())
-    +"\n"+OrigVal(acc.mag())+"\n"+OrigVal(att_dist),loc.x-100,loc.y-100);
   }
+  
+  //void showMetrics(){
+  //  line(loc.x, loc.y, loc.x+(55*sin(att_direction)), loc.y+(55*cos(att_direction)));
+  //  textSize(25);
+  //  text(OrigVal(vel.mag())
+  //  +"\n"+OrigVal(acc.mag())+"\n"+OrigVal(att_dist),loc.x-100,loc.y-100);
+  //}
   
   ArrayList<Point> p=new ArrayList<Point>();
     
