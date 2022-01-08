@@ -93,5 +93,6 @@ int mouseLoc2index(float mx, float my){
   float boxside = width/size;
   int xi = floor(mx/boxside);
   int yi = floor(my/boxside);
-  return (xi*size)+yi;
+  int indxx = (xi*size)+yi;
+  return indxx>-1&&indxx<pixelsrep.length ? (xi*size)+yi:0;
 }
