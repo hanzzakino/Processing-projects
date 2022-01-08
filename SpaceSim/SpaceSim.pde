@@ -8,11 +8,11 @@ float xpt = 0,ypt = 0;
 //2360620.8 secs or frames
 void setup(){
   
-  size(500,500);
+  size(500,500, OPENGL);
   frameRate(60);
   zoom = 0.05;
   
-  space_objects = new ArrayList<>();
+  space_objects = new ArrayList();
   
   float earth_mass = 5.972*(pow(10,24));
   float earth_radius = 6378137;
@@ -25,7 +25,7 @@ void setup(){
   
   space_objects.add(new SpaceObject(0,0, earth_mass, earth_radius,0,0));
   space_objects.add(new SpaceObject(0,-distancee,moon_mass,moon_radius, moon_vel,PI/2));
-  space_objects.add(new SpaceObject(0,distancee-10000000,moon_mass,moon_radius, moon_vel,PI/2));
+  
 }
 
 
